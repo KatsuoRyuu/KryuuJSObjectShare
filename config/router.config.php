@@ -35,7 +35,6 @@ namespace KryuuJSObjectShare;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
-
  * @version 20140730 
  * @link https://github.com/KatsuoRyuu/
  */
