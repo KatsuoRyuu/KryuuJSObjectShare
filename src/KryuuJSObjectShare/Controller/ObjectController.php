@@ -76,6 +76,14 @@ class ObjectController extends AbstractActionController
 		
 	}
 	
+	public function loadAction()
+	{
+		$request = $this->getRequest();
+		if ($request->isXmlHttpRequest()) {
+			
+		}
+	}
+	
 	public function testAction()
 	{
 		
