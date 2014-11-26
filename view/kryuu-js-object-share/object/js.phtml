@@ -1,3 +1,10 @@
+<?php
+header('Content-Type: text/javascript');
+header('Content-Transfer-Encoding: binary');
+header('Expires: 0');
+header('Cache-Control: must-revalidate');
+header('Pragma: public');
+?>
 <?php if (FALSE): ?><script><?php endif; ?>
 
 /**
@@ -40,9 +47,9 @@
 
 
 
-
 var Kryuu = {
-    Objects: {
+    objects: 
+    {
 		<?php
 			foreach ($shareObjects as $name => $array)
 			{
@@ -62,7 +69,9 @@ var Kryuu = {
 			}
 		?>
 	}
-	getObject: {
+    loadedObjects:{},
+	loadObject: function (classname, searchArray)
+    {
 		if (window.XMLHttpRequest)
 		{// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
@@ -72,6 +81,40 @@ var Kryuu = {
 			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		}
 		if (!xmlhttp)
+        {
+            console.log("XML HTTP Request failed");
+        }
+        else
+        {
+            var retriverObject = {
+                class: classname,
+                array: searchArray
+            };
+            
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            xmlhttp.open("POST", "<?php echo $this->url('KryuuJSObjectShare/load') ?>");
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.send(JSON.stringify(retriverObject));
+            this.loadedObject = xmlhttp.responseText;
+            console.log(this.loadedObjects);
+        }
+        
+            
 	}
-
+    saveObject: function(object)
+    {
+        var data = JSON.stringify(object);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "<?php echo $this->url('KryuuJSObjectShare/save') ?>", //Relative or absolute path to response.php file
+            data: data,
+            success: function(data) 
+            {
+                console.log("Form submitted successfully.\nReturned json: " + object["json"]);
+            }
+        });
+    }
 };
+
+

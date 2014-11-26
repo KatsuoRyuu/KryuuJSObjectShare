@@ -119,7 +119,8 @@ class Object {
      * @param ANY $key
      * @return $value
      */
-    public function populate($array){
+    public function populate($array)
+    {
         foreach($array as $key => $var){
             $this->$key = $var;
         }
@@ -131,7 +132,8 @@ class Object {
      * 
      * @return type array
      */
-    public function getArrayCopy(){
+    public function getArrayCopy()
+    {
         return get_object_vars($this);
     }
     

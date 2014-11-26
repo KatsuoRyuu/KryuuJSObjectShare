@@ -41,7 +41,7 @@ namespace KryuuJSObjectShare;
 
 return array(
     'routes' => array(
-        'kryuuJSObjectShare' => array(
+        'KryuuJSObjectShare' => array(
             'type'    => 'literal',
             'options' => array(
                 'route' => '/kryuujsobject',
@@ -67,6 +67,36 @@ return array(
 							'secure' => '0',
                             'controller' => __NAMESPACE__ . '\Object',
                             'action' => 'js',
+                        ),
+                    ),
+                ),
+                /**
+                 * javascript Route
+                 */
+                'load' => array(
+                    'type' => 'segment',
+                    'options' => array(
+                        'route' => '/load',
+						'constraints' => array(
+						),
+                        'defaults' => array(
+                            'controller' => __NAMESPACE__ . '\Object',
+                            'action' => 'load',
+                        ),
+                    ),
+                ),
+                /**
+                 * javascript Route
+                 */
+                'save' => array(
+                    'type' => 'segment',
+                    'options' => array(
+                        'route' => '/save',
+						'constraints' => array(
+						),
+                        'defaults' => array(
+                            'controller' => __NAMESPACE__ . '\Object',
+                            'action' => 'save',
                         ),
                     ),
                 ),
