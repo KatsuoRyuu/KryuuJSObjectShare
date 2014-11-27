@@ -1,6 +1,6 @@
 <?php
 
-//$this->headScript()->prependFile('http://code.jquery.com/jquery-2.0.0.js');
+$this->headScript()->prependFile('http://code.jquery.com/jquery-2.0.0.js');
 $this->headScript()->appendFile($this->basePath() . '/kryuujsobject/js/' . $sessionID . '/' . $secure);
 
 ?>
@@ -10,12 +10,12 @@ $this->headScript()->appendFile($this->basePath() . '/kryuujsobject/js/' . $sess
 
 <script>
 	
-	var array = Kryuu.Objects.stdClass;
+	var array = Kryuu.objects.stdClass;
 	
 	console.log(array);
 	if (array instanceof Array) {
 		array.forEach(function(entry) {
-			var div = $('#testDiv')
+			var div = $('#testDiv');
 			div.append('<p><div id="user">');
 			div.append('Username: ' + entry.username + '</br>');
 			div.append('Username: ' + entry.password + '</br>');
@@ -31,7 +31,7 @@ $this->headScript()->appendFile($this->basePath() . '/kryuujsobject/js/' . $sess
 	else
 	{
 		var entry = array;
-		var div = $('#testDiv')
+		var div = $('#testDiv');
 		div.append('<p><div id="user">');
 		div.append('Username: ' + entry.username + '</br>');
 		div.append('Username: ' + entry.password + '</br>');
