@@ -78,11 +78,17 @@ class ObjectController extends AbstractActionController
 	
 	public function loadAction()
 	{
-		$request = $this->getRequest();
-		if ($request->isXmlHttpRequest()) 
-        {
+	  $viewModel = new ViewModel();
+	  $viewModel->setTerminal(true);
+	  $request = $this->getRequest();
+		
+	  $dataArray = $request->getPost();
+	  print_r( $dataArray['json'] );
+	  if ($request->isXmlHttpRequest()) 
+	  {
 			
-		}
+	  }
+	  return $viewModel;
 	}
     
     public function saveAction()

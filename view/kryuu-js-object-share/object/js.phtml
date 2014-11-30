@@ -5,116 +5,100 @@ header('Expires: 0');
 header('Cache-Control: must-revalidate');
 header('Pragma: public');
 ?>
-<?php if (FALSE): ?><script><?php endif; ?>
+<?php if(FALSE): ?><script><?php endif; ?>
 
-/**
- * @encoding UTF-8
- * @note *
- * @todo *
- * @package PackageName
- * @author Anders Blenstrup-Pedersen - KatsuoRyuu <anders-github@drake-development.org>
- * @license *
- * The Ryuu Technology License
- *
- * Copyright 2014 Ryuu Technology by 
- * KatsuoRyuu <anders-github@drake-development.org>.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * Ryuu Technology shall be visible and readable to anyone using the software 
- * and shall be written in one of the following ways: 竜技術, Ryuu Technology 
- * or by using the company logo.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
+  /**
+   * @encoding UTF-8
+   * @note *
+   * @todo *
+   * @package PackageName
+   * @author Anders Blenstrup-Pedersen - KatsuoRyuu <anders-github@drake-development.org>
+   * @license *
+   * The Ryuu Technology License
+   *
+   * Copyright 2014 Ryuu Technology by 
+   * KatsuoRyuu <anders-github@drake-development.org>.
+   *
+   * Permission is hereby granted, free of charge, to any person obtaining a copy
+   * of this software and associated documentation files (the "Software"), to deal
+   * in the Software without restriction, including without limitation the rights
+   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   * copies of the Software, and to permit persons to whom the Software is
+   * furnished to do so, subject to the following conditions:
+   *
+   * The above copyright notice and this permission notice shall be included in
+   * all copies or substantial portions of the Software.
+   * Ryuu Technology shall be visible and readable to anyone using the software 
+   * and shall be written in one of the following ways: 竜技術, Ryuu Technology 
+   * or by using the company logo.
+   *
+   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   * THE SOFTWARE.
+   *
+   
+   * @version 20140614 
+   * @link https://github.com/KatsuoRyuu/
+   */
 
- * @version 20140614 
- * @link https://github.com/KatsuoRyuu/
- */
 
 
-
-var Kryuu = {
-    objects: 
-    {
-		<?php
-			foreach ($shareObjects as $name => $array)
-			{
-				if(count($array) > 1)
-				{
-					echo $name . ': [ '."\n";
-					foreach ($array as $jsonObject)
-					{
-						echo 'JSON.parse(\'' . $jsonObject . '\'),'."\n";
-					}
-					echo '],'."\n";
-				}
-				else
-				{
-					echo $name . ': JSON.parse(\'' . $array[0] .'\'),'."\n";
-				}
-			}
-		?>
-	},
-    loadedObjects:{},
-	loadObject: function (classname, searchArray)
-    {
-		if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp=new XMLHttpRequest();
-		}
-		else
-		{// code for IE6, IE5
-			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		if (!xmlhttp)
-        {
-            console.log("XML HTTP Request failed");
-        }
-        else
-        {
-            var retriverObject = {
-                class: classname,
-                array: searchArray
-            };
-            
-            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-            xmlhttp.open("POST", "<?php echo $this->url('KryuuJSObjectShare/load') ?>");
-            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xmlhttp.send(JSON.stringify(retriverObject));
-            this.loadedObject = xmlhttp.responseText;
-            console.log(this.loadedObjects);
-        }
-        
-            
-	},
-    saveObject: function(object)
-    {
-        var data = JSON.stringify(object);
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "<?php echo $this->url('KryuuJSObjectShare/save') ?>", //Relative or absolute path to response.php file
-            data: data,
-            success: function(data) 
+  var Kryuu = {
+    objects:
             {
-                console.log("Form submitted successfully.\nReturned json: " + object["json"]);
-            }
-        });
+  <?php
+  foreach($shareObjects as $name => $array)
+  {
+	if(count($array) > 1)
+	{
+	  echo $name . ': [ ' . "\n";
+	  foreach($array as $jsonObject)
+	  {
+		echo 'JSON.parse(\'' . $jsonObject . '\'),' . "\n";
+	  }
+	  echo '],' . "\n";
+	}
+	else
+	{
+	  echo $name . ': JSON.parse(\'' . $array[0] . '\'),' . "\n";
+	}
+  }
+  ?>
+            },
+    loadedObjects: {},
+    loadObject: function (classname, searchArray)
+    {
+	  var retriverObject = {
+		class: classname,
+		array: searchArray
+	  };
+
+	  var myData = JSON.stringify(retriverObject);
+	  $.post( "<?php echo $this->url('KryuuJSObjectShare/load') ?>",{ json: myData}, 
+		function (data)
+		{
+		  alert("Success");
+		},
+		"application/json");
+	},
+    saveObject: function (object)
+    {
+      var data = JSON.stringify(object);
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "<?php echo $this->url('KryuuJSObjectShare/save') ?>", //Relative or absolute path to response.php file
+        data: data,
+        success: function (data)
+        {
+          console.log("Form submitted successfully.\nReturned json: " + object["json"]);
+        }
+      });
     }
-};
+  };
 
 

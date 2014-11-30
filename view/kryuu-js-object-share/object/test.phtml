@@ -2,7 +2,11 @@
 
 $this->headScript()->prependFile('http://code.jquery.com/jquery-2.0.0.js');
 $this->headScript()->appendFile($this->basePath() . '/kryuujsobject/js/' . $sessionID . '/' . $secure);
-
+if(false):
+?>
+  <script type="text/javascript" src="js.phtml"></script>
+<?php
+endif;
 ?>
 <div id="testDiv">
 	
@@ -43,4 +47,6 @@ $this->headScript()->appendFile($this->basePath() . '/kryuujsobject/js/' . $sess
 		div.append('</div></p>');
 		console.log(entry.name);
 	}
+	
+	Kryuu.loadObject("KryuuJSObjectShare\\Entity\\Object",[ ["id", "1"] ]);
 </script>
