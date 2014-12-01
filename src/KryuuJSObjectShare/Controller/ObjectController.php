@@ -83,7 +83,7 @@ class ObjectController extends AbstractActionController
 	  $request = $this->getRequest();
 		
 	  $dataArray = $request->getPost();
-	  print_r( $dataArray['json'] );
+	  print_r( json_decode($dataArray['json']) );
 	  if ($request->isXmlHttpRequest()) 
 	  {
 			

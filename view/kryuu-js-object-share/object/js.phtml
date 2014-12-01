@@ -72,13 +72,8 @@ header('Pragma: public');
     loadedObjects: {},
     loadObject: function (classname, searchArray)
     {
-	  var retriverObject = {
-		class: classname,
-		array: searchArray
-	  };
-
-	  var myData = JSON.stringify(retriverObject);
-	  $.post( "<?php echo $this->url('KryuuJSObjectShare/load') ?>",{ json: myData}, 
+	  var myData = JSON.stringify(searchArray);
+	  $.post( "<?php echo $this->url('KryuuJSObjectShare/load') ?>",{ classname: classname, json: myData }, 
 		function (data)
 		{
 		  alert("Success");
