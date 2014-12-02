@@ -79,6 +79,17 @@ header('Pragma: public');
 		  alert("Success");
 		},
 		"application/json");
+        
+        $.ajax({
+            type: 'POST',s
+            url: "<?php echo $this->url('KryuuJSObjectShare/load') ?>",
+            data: {classname:classname, json:myData},
+            success: function(returnData)
+            {
+                console.log(returnData);
+            },
+            dataType: 'json'
+        });
 	},
     saveObject: function (object)
     {
