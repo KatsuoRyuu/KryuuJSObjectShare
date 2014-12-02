@@ -81,11 +81,19 @@ class ObjectController extends AbstractActionController
 	  $viewModel = new ViewModel();
 	  $viewModel->setTerminal(true);
 	  $request = $this->getRequest();
-		
-	  $dataArray = $request->getPost();
-	  print_r( json_decode($dataArray) );
+
 	  if ($request->isXmlHttpRequest()) 
 	  {
+		$classname = filter_input(INPUT_GET, 'classname', FILTER_SANITIZE_STRING);
+		$json = filter_input(INPUT_GET, 'json');
+		$dataArray['classname'] = $classname; 
+		$dataArray['json_object'] = json_decode($json);
+		
+		if(new $classname){
+		  $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+		  $object =  $em->getRepository('KryuuJSObjectShare\Entity\Object')->findBy(array('sessionID'=>$this->params('id')));
+		}
+
 			
 	  }
 	  return $viewModel;

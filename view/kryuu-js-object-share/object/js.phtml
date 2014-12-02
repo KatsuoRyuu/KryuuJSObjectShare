@@ -70,26 +70,16 @@ header('Pragma: public');
   ?>
             },
     loadedObjects: {},
-    loadObject: function (classname, searchArray)
+    loadObject: function (classname, searchArray, callback)
     {
+	  console.log(searchArray);
 	  var myData = JSON.stringify(searchArray);
-	  $.post( "<?php echo $this->url('KryuuJSObjectShare/load') ?>",{ classname: classname, json: myData }, 
-		function (data)
-		{
-		  alert("Success");
-		},
-		"application/json");
-        
-        $.ajax({
-            type: 'POST',s
-            url: "<?php echo $this->url('KryuuJSObjectShare/load') ?>",
-            data: {classname:classname, json:myData},
-            success: function(returnData)
-            {
-                console.log(returnData);
-            },
-            dataType: 'json'
-        });
+
+	  $.get( "<?= $this->url('KryuuJSObjectShare/load') ?>", {classname: classname, json: myData} )
+	  .done(function( data ) {
+		console.log( "Data Loaded: " + data );
+		this.loadedObjects = data;
+	  });
 	},
     saveObject: function (object)
     {
